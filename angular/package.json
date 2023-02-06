@@ -32,6 +32,7 @@
     "@angular/router": "^15.0.1",
     "@volo/ngx-lepton-x.core": "^2.0.1",
     "@volo/ngx-lepton-x.lite": "^2.0.1",
+    "bootstrap": "^5.2.3",
     "bootstrap-icons": "~1.8.3",
     "rxjs": "7.5.6",
     "tslib": "^2.1.0",
