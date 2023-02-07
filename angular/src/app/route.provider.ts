@@ -17,9 +17,23 @@ function configureRoutes(routesService: RoutesService) {
       },
       {
         path: '/books',
-        name: 'Book',
+        name: '::Menu:Book',
         iconClass: 'fas fa-book',
         order: 2,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/authors',
+        name: '::Menu:Author',
+        iconClass: 'fas fa-feather',
+        order: 2,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/publishers',
+        name: '::Menu:Publisher',
+        iconClass: 'fas fa-certificate',
+        order: 3,
         layout: eLayoutType.application,
       },
     ]);
