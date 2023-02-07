@@ -1,28 +1,3 @@
-<!-- <button class="btn btn-primary mb-3">Add book</button>
-
-<table class="table table-secondary">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Type</th>
-            <th scope="col">Price</th>
-            <th scope="col">Details</th>
-            <th scope="col">Update</th>
-            <th scope="col">Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let book of bookItems">
-            <td>{{book.name}}</td>
-            <td>{{bookType[book.type]}}</td>
-            <td>{{book.price}}</td>
-            <td><a href=""><i class="fa-solid fa-circle-info"></i></a></td>
-            <td><a href=""><i class="fa-solid fa-pencil"></i></a></td>
-            <td><a href=""><i class="fa-solid fa-trash"></i></a></td>
-        </tr>   
-    </tbody>
-</table> -->
-
 <!-- Add the "new book" button here -->
 <div class="text-lg-end pt-2">
     <button id="create" class="btn btn-primary" type="button" (click)="createBook()">
@@ -78,4 +53,40 @@
       </button>
     </ng-template>
   </abp-modal>
+
+  <!-- Create and Add book: Need Fix --> 
+  <!-- <ng-template #abpBody>
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="form-group">
+        <label for="book-name">Name</label><span> * </span>
+        <input type="text" id="book-name" class="form-control" formControlName="name" autofocus />
+      </div>
+  
+      <div class="form-group">
+        <label for="book-price">Price</label><span> * </span>
+        <input type="number" id="book-price" class="form-control" formControlName="price" />
+      </div>
+  
+      <div class="form-group">
+        <label for="book-type">Type</label><span> * </span>
+        <select class="form-control" id="book-type" formControlName="type">
+          <option [ngValue]="null">Select a book type</option>
+          <option [ngValue]="type.value" *ngFor="let type of bookTypes"> {{ '::Enum:BookType.' + type.value | abpLocalization }}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label>Publish date</label><span> * </span>
+        <input
+          #datepicker="ngbDatepicker"
+          class="form-control"
+          name="datepicker"
+          formControlName="publishDate"
+          ngbDatepicker
+          (click)="datepicker.toggle()"
+        />
+      </div>
+    </form>
+  </ng-template> -->
+  
   
