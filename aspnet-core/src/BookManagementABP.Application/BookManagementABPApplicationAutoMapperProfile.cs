@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookManagementABP.Authors;
 using BookManagementABP.Books;
 
 namespace BookManagementABP;
@@ -12,5 +13,7 @@ public class BookManagementABPApplicationAutoMapperProfile : Profile
          * into multiple profile classes for a better organization. */
         CreateMap<Book, BookDto>();
         CreateMap<CreateUpdateBookDto, Book>();
+        CreateMap<Author, AuthorDTO>();
+        CreateMap<CreateUpdateAuthorDTO, Author>();
     }
 }

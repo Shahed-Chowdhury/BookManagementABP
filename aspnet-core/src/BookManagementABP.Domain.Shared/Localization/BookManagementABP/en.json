@@ -29,6 +29,8 @@
     "Enum:BookType.5": "Horror",
     "Enum:BookType.6": "Science",
     "Enum:BookType.7": "Science fiction",
-    "Enum:BookType.8": "Poetry"
+    "Enum:BookType.8": "Poetry",
+    "BirthDate": "Date of birth",
+    "ShortBio":  "Bio"
   }
 }
