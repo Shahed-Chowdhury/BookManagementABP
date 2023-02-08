@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AuthorRoutingModule } from './author-routing.module';
 import { AuthorComponent } from './author.component';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { AuthorComponent } from './author.component';
   ],
   imports: [
     SharedModule,
-    AuthorRoutingModule
+    AuthorRoutingModule,
+    NgbDatepickerModule
   ]
 })
 export class AuthorModule { }
