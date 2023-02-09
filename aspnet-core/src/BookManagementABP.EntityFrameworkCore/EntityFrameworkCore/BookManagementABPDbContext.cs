@@ -1,5 +1,6 @@
 ﻿using BookManagementABP.Authors;
 using BookManagementABP.Books;
+using BookManagementABP.Publishers;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -29,6 +30,7 @@ public class BookManagementABPDbContext :
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
     public DbSet<Book> Books { get; set; }
     public DbSet<Author> Authors { get; set; }
+    public DbSet<Publisher> Publishers { get; set; }    
 
     #region Entities from the modules
 
@@ -94,6 +96,13 @@ public class BookManagementABPDbContext :
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
             b.Property(x => x.BirthDate).IsRequired();
             b.Property(x => x.ShortBio).IsRequired();
+        });
+
+        builder.Entity<Publisher>(b =>
+        {
+            b.ToTable(BookManagementABPConsts.DbTablePrefix + "Publishers", BookManagementABPConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
         });
     }
 }

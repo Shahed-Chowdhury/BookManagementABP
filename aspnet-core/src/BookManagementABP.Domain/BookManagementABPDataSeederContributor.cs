@@ -1,5 +1,6 @@
 ﻿using BookManagementABP.Authors;
 using BookManagementABP.Books;
+using BookManagementABP.Publishers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,15 @@ namespace BookManagementABP
     {
         private readonly IRepository<Book, Guid> _bookRepository;
         private readonly IRepository<Author, Guid> _authorRepository;
+        private readonly IRepository<Publisher, Guid> _publisherRepository;
 
-        public BookManagementABPDataSeederContributor(IRepository<Book, Guid> bookRepository, IRepository<Author, Guid> authorRepository)
+        public BookManagementABPDataSeederContributor(IRepository<Book, Guid> bookRepository,
+            IRepository<Author, Guid> authorRepository,
+            IRepository<Publisher, Guid> publisherRepository)
         {
             _bookRepository = bookRepository;
             _authorRepository = authorRepository;
+            _publisherRepository = publisherRepository;
         }
 
         public async Task SeedAsync(DataSeedContext context)
@@ -70,6 +75,26 @@ namespace BookManagementABP
                     },
                     autoSave: true
                 );
+            }
+
+            if (await _publisherRepository.GetCountAsync() <= 0)
+            {
+                await _publisherRepository.InsertAsync(
+                    new Publisher
+                    {
+                        Name = "Macmillan",
+                        
+                    },
+                    autoSave: true
+                );
+
+                await _publisherRepository.InsertAsync(
+                   new Publisher
+                   {
+                       Name = "Hachette Book Group",
+                   },
+                   autoSave: true
+               );
             }
         }
     }
