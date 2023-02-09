@@ -87,6 +87,7 @@ public class BookManagementABPDbContext :
             b.ToTable(BookManagementABPConsts.DbTablePrefix + "Books", BookManagementABPConsts.DbSchema);
             b.ConfigureByConvention(); //auto configure for the base class props
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+            b.HasOne<Publisher>().WithMany().HasForeignKey(x => x.PublisherId).IsRequired(); // check this for many to many relationship
         });
 
         builder.Entity<Author>(b =>
