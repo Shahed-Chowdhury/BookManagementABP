@@ -75,26 +75,26 @@
   
     <ng-template #abpBody>
       <form [formGroup]="form" (ngSubmit)="save()">
-        <div class="form-group">
+        <div class="form-group mb-3">
           <label for="book-name">Name</label><span> * </span>
-          <input type="text" id="book-name" class="form-control" formControlName="name" autofocus />
+          <input type="text" id="book-name" class="form-control mt-2" formControlName="name" autofocus />
         </div>
     
         <div class="form-group">
           <label for="book-price">Price</label><span> * </span>
-          <input type="number" id="book-price" class="form-control" formControlName="price" />
+          <input type="number" id="book-price" class="form-control mt-2 mb-3" formControlName="price" />
         </div>
     
-        <div class="form-group">
-          <label for="book-type">Type</label><span> * </span>
+        <div class="form-group mb-3">
+          <label for="book-type" class="mb-2">Type</label><span> * </span>
           <select class="form-control" id="book-type" formControlName="type">
             <option [ngValue]="null">Select a book type</option>
             <option [ngValue]="type.value" *ngFor="let type of bookTypes"> {{ '::Enum:BookType.' + type.value | abpLocalization }}</option>
           </select>
         </div>
     
-        <div class="form-group">
-          <label>Publish date</label><span> * </span>
+        <div class="form-group" class="mb-3">
+          <label class="mb-2">Publish date</label><span> * </span>
           <input
             #datepicker="ngbDatepicker"
             class="form-control"
@@ -104,11 +104,39 @@
             (click)="datepicker.toggle()"
           />
         </div>
+        <div class=" mb-3">
+          <label for="" class="mb-2">Publishers</label><span>*</span>
+          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+          <ng-select
+            [items]="publisherList"
+            bindLabel="name"
+            bindvalue="id"
+            [multiple]="false"
+            (change)="selectedPublisherFn($event)"
+            [closeOnSelect]="true"
+            placeholder="Select publishers"
+            [(ngModel)]="selectedPublisher"
+            [ngModelOptions]="{standalone: true}"
+          ></ng-select>
+          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+        </div>
+        <div class="form-group mb-5">
+          <label for="" class="mb-2">Authors</label><span>*</span>
+          <ng-select
+            [items]="authorList.items"
+            bindLabel="name"
+            bindvalue="id"
+            [multiple]="true"
+            (change)="selectedAuthors($event)"
+            [closeOnSelect]="false"
+            placeholder="Select authors"
+          ></ng-select>
+        </div>
       </form>
     </ng-template>
     
   
-    <ng-template #abpFooter>
+    <ng-template class="mt-5" #abpFooter>
       <button type="button" class="btn btn-secondary" abpClose>
           {{ '::Close' | abpLocalization }}
       </button>

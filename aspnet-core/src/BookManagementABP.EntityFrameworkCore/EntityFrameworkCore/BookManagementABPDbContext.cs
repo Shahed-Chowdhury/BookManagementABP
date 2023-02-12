@@ -1,4 +1,5 @@
 ﻿using BookManagementABP.Authors;
+using BookManagementABP.Book_Authors;
 using BookManagementABP.Books;
 using BookManagementABP.Publishers;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,8 @@ public class BookManagementABPDbContext :
     public DbSet<Book> Books { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<Publisher> Publishers { get; set; }    
+
+    public DbSet<Book_Author> Book_Authors { get; set; }
 
     #region Entities from the modules
 
@@ -97,6 +100,16 @@ public class BookManagementABPDbContext :
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
             b.Property(x => x.BirthDate).IsRequired();
             b.Property(x => x.ShortBio).IsRequired();
+        });
+
+        builder.Entity<Book_Author>(b =>
+        {
+            b.ToTable(BookManagementABPConsts.DbTablePrefix + "BookAuthors", BookManagementABPConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.BookId).IsRequired();
+            b.Property(x => x.AuthorId).IsRequired();
+            b.HasOne<Author>().WithMany().HasForeignKey(x => x.AuthorId).IsRequired();
+            b.HasOne<Book>().WithMany().HasForeignKey(x => x.BookId).IsRequired();
         });
 
         builder.Entity<Publisher>(b =>

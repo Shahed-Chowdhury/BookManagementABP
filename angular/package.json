@@ -31,6 +31,7 @@
     "@angular/platform-browser": "^15.0.1",
     "@angular/platform-browser-dynamic": "^15.0.1",
     "@angular/router": "^15.0.1",
+    "@ng-select/ng-select": "^10.0.3",
     "@swimlane/ngx-datatable": "^20.1.0",
     "@volo/ngx-lepton-x.core": "^2.0.1",
     "@volo/ngx-lepton-x.lite": "^2.0.1",

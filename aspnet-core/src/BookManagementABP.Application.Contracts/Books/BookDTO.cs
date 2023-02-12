@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 
 
@@ -13,5 +14,8 @@ namespace BookManagementABP.Books
         public DateTime PublishDate { get; set; }
 
         public float Price { get; set; }
+
+        [Required]
+        public Guid PublisherId { get; set; }
     }
 }

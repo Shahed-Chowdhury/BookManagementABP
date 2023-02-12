@@ -34,6 +34,6 @@
     "Enum:BookType.7": "Science fiction",
     "Enum:BookType.8": "Poetry",
     "BirthDate": "Date of birth",
-    "ShortBio": "Bio",
+    "ShortBio": "Bio"
   }
 }

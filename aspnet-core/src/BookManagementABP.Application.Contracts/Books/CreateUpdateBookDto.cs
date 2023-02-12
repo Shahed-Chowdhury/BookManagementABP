@@ -8,20 +8,23 @@ using Volo.Abp.Application.Dtos;
 
 namespace BookManagementABP.Books
 {
-    public class CreateUpdateBookDto: AuditedEntityDto<Guid>
+    public class CreateUpdateBookDto
     {
         [Required]
         [StringLength(128)]
         public string Name { get; set; }
 
         [Required]
-        public BookType Type { get; set; } = BookType.Undefined;
+        public BookType Type { get; set; } 
 
         [Required]
         [DataType(DataType.Date)]
-        public DateTime PublishDate { get; set; } = DateTime.Now;
+        public DateTime PublishDate { get; set; } 
 
         [Required]
         public float Price { get; set; }
+
+        [Required]
+        public Guid PublisherId { get; set; }
     }
 }

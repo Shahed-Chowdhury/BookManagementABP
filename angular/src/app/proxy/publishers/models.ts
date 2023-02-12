@@ -5,5 +5,6 @@ export interface CreateUpdatePublisherDTO extends AuditedEntityDto<string> {
 }
 
 export interface PublisherDTO extends AuditedEntityDto<string> {
+  id?: string;
   name: string;
 }
