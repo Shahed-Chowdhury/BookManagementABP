@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BookManagementABP.Domain\BookManagementABP.Domain.csproj" />
     <ProjectReference Include="..\BookManagementABP.Application.Contracts\BookManagementABP.Application.Contracts.csproj" />
+    <ProjectReference Include="..\BookManagementABP.EntityFrameworkCore\BookManagementABP.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

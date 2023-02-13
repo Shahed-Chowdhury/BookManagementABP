@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookManagementABP.Publishers;
+using System;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 
@@ -17,5 +18,7 @@ namespace BookManagementABP.Books
 
         [Required]
         public Guid PublisherId { get; set; }
+
+        public PublisherDTO publisher { get; set; }
     }
 }

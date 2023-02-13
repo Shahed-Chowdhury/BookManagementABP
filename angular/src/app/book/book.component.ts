@@ -1,3 +1,5 @@
+import { BookAuthorDTO, CreateUpdateBookAuthorDTO } from './../proxy/book-authors/models';
+import { BookAuthorServicesService } from './../proxy/book-authors/book-author-services.service';
 import { clearPage } from '@abp/ng.core/testing';
 import { PublisherService } from './../proxy/publishers/publisher.service';
 import { AuthorService } from './../proxy/authors/author.service';
@@ -25,6 +27,8 @@ export class BookComponent implements OnInit {
   authorList = {items: [], totalCount: 0} as PagedResultDto<AuthorDTO>;
   publisherList = [];
   selectedPublisher:any;
+  selectedAuthors:any;
+  bookId: string
 
   // add bookTypes as a list of BookType enum members
   bookTypes = bookTypeOptions;
@@ -36,6 +40,7 @@ export class BookComponent implements OnInit {
     private authorService: AuthorService,
     private publisherService: PublisherService,
     private bookService: BookService,
+    private bookAuthorService: BookAuthorServicesService,
     private fb: FormBuilder,
     private confirmation: ConfirmationService) {}
 
@@ -92,23 +97,35 @@ export class BookComponent implements OnInit {
   }
 
   // add save method
-  save() {
-    if (this.form.invalid) {
-      return;
-    }
+  async save() {
+    try{
 
-    var bookObj = this.form.value
-    bookObj.publisherId = this.selectedPublisher.id
+      if (this.form.invalid) { return }
+  
+      const bookObj = this.form.value
+      
+      bookObj.publisherId = this.selectedPublisher.id
+  
+      const request = this.selectedBook.id
+      ? await this.bookService.update(this.selectedBook.id, bookObj).toPromise()
+      : await this.bookService.create(bookObj).toPromise();
 
-    const request = this.selectedBook.id
-    ? this.bookService.update(this.selectedBook.id, bookObj)
-    : this.bookService.create(bookObj);
+      this.bookId = request.id
 
-    request.subscribe(() => {
+      if(!this.selectedBook.id){
+        this.selectedAuthors.forEach(author => {
+          var obj = {} as CreateUpdateBookAuthorDTO;
+          obj = { authorId: author.id, bookId: this.bookId }
+          this.bookAuthorService.create(obj).subscribe(res => {})
+        })
+      }
+      
       this.isModalOpen = false;
       this.form.reset();
       this.list.get();
-    });
+  
+    }catch(exception){ console.error(exception); }
+
   }
 
   // Add a delete method
@@ -120,8 +137,9 @@ export class BookComponent implements OnInit {
     });
   }
 
-  selectedAuthors(event){
-   console.log(event); 
+  selectedAuthorsFn(event){
+    var authors = event
+    this.selectedAuthors = authors;
   }
 
   selectedPublisherFn(event){

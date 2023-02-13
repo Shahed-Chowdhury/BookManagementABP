@@ -112,6 +112,8 @@ public class BookManagementABPDbContext :
             b.HasOne<Book>().WithMany().HasForeignKey(x => x.BookId).IsRequired();
         });
 
+        builder.Entity<Book_Author>().HasKey(bam => new { bam.AuthorId, bam.BookId });
+
         builder.Entity<Publisher>(b =>
         {
             b.ToTable(BookManagementABPConsts.DbTablePrefix + "Publishers", BookManagementABPConsts.DbSchema);

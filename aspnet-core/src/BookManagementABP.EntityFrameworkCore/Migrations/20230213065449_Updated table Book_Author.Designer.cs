@@ -4,6 +4,7 @@ using BookManagementABP.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace BookManagementABP.Migrations
 {
     [DbContext(typeof(BookManagementABPDbContext))]
-    partial class BookManagementABPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230213065449_Updated table Book_Author")]
+    partial class UpdatedtableBookAuthor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

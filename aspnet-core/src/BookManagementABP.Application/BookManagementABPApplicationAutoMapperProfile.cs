@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using BookManagementABP.Authors;
+using BookManagementABP.Book_Authors;
+using BookManagementABP.BookAuthors;
 using BookManagementABP.Books;
 using BookManagementABP.Publishers;
 
@@ -18,5 +20,7 @@ public class BookManagementABPApplicationAutoMapperProfile : Profile
         CreateMap<CreateUpdateAuthorDTO, Author>();
         CreateMap<Publisher, PublisherDTO>();
         CreateMap<CreateUpdatePublisherDTO, Publisher>();
+        CreateMap<Book_Author, BookAuthorDTO>();
+        CreateMap<CreateUpdateBookAuthorDTO, Book_Author>();
     }
 }
