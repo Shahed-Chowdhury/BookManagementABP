@@ -130,6 +130,8 @@
             (change)="selectedAuthorsFn($event)"
             [closeOnSelect]="false"
             placeholder="Select authors"
+            [(ngModel)]="selectedAuthors"
+            [ngModelOptions]="{standalone: true}"
           ></ng-select>
         </div>
       </form>

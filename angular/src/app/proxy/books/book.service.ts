@@ -35,11 +35,27 @@ export class BookService {
     { apiName: this.apiName });
   
 
+  getBookDetails = () =>
+    this.restService.request<any, BookDto[]>({
+      method: 'GET',
+      url: '/api/app/book/book-details',
+    },
+    { apiName: this.apiName });
+  
+
   getList = (input: PagedAndSortedResultRequestDto) =>
     this.restService.request<any, PagedResultDto<BookDto>>({
       method: 'GET',
       url: '/api/app/book',
       params: { sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName });
+  
+
+  getWithPublisherById = (id: string) =>
+    this.restService.request<any, BookDto>({
+      method: 'GET',
+      url: `/api/app/book/${id}/with-publisher`,
     },
     { apiName: this.apiName });
   

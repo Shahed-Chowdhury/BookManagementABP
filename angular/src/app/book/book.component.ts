@@ -45,13 +45,10 @@ export class BookComponent implements OnInit {
     private confirmation: ConfirmationService) {}
 
   ngOnInit() {
-    const bookStreamCreator = (query) => this.bookService.getList(query);
     const authorStreamCreator = (query) => this.authorService.getList(query);
     const publisherStreamCreator = (query) => this.publisherService.getList(query);
     
-    this.list.hookToQuery(bookStreamCreator).subscribe((response) => {
-      this.book = response;
-    });
+    this.getList()
 
     this.list2.hookToQuery(authorStreamCreator).subscribe((response)=>{
       this.authorList = response;
@@ -63,24 +60,31 @@ export class BookComponent implements OnInit {
     })
   }
 
+  getList(){
+    this.bookService.getBookDetails().subscribe(res => {
+      var items = res;
+      this.book.items = items
+      this.book.totalCount = items.length
+    })
+  }
+
   createBook() {
     this.selectedPublisher = null
     this.selectedBook = {} as BookDto;
+    this.selectedAuthors = []
     this.buildForm(); // add this line
     this.isModalOpen = true;
   }
 
   // Add editBook method
   editBook(id: string) {
-    this.bookService.get(id).subscribe((book:any) => {
+    this.bookService.getWithPublisherById(id).subscribe(book => {
       this.selectedBook = book;
-      var publisherId = book.publisherId;
-      this.publisherService.get(publisherId).subscribe(res=>{
-        this.selectedPublisher = res
-      })
+      this.selectedPublisher = this.selectedBook.publisher
+      this.selectedAuthors = this.selectedBook.author    
       this.buildForm();
       this.isModalOpen = true;
-    });
+    })
   }
 
   // add buildForm method
@@ -122,7 +126,7 @@ export class BookComponent implements OnInit {
       
       this.isModalOpen = false;
       this.form.reset();
-      this.list.get();
+      this.getList();
   
     }catch(exception){ console.error(exception); }
 
@@ -132,7 +136,7 @@ export class BookComponent implements OnInit {
   delete(id: string) {
     this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
       if (status === Confirmation.Status.confirm) {
-        this.bookService.delete(id).subscribe(() => this.list.get());
+        this.bookService.delete(id).subscribe(() => this.getList());
       }
     });
   }

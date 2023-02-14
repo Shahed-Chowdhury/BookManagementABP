@@ -94,31 +94,76 @@ namespace BookManagementABP.Books
         }
 
 
-        /*
-        from b in _context.Books
-            where b.Id == id
-            select b).Include(x => x.Publisher).SingleOrDefault();
-        
-        var queryable = await Repository.GetQueryableAsync();
-        var bookInfo = queryable.Include(a => a.Publisher).FirstOrDefault(x => x.Id == id);
-
-        var publisherDTO = new PublisherDTO();
-
-        publisherDTO.Id = bookInfo.Publisher.Id;
-        publisherDTO.Name = bookInfo.Publisher.Name;
-
-
-        var book = new BookDto
+        public async Task<List<BookDto>> GetBookDetails()
         {
-            Id = id,
-            Name = bookInfo.Name,
-            Type = bookInfo.Type,
-            PublishDate = bookInfo.PublishDate,
-            Price = bookInfo.Price,
-            PublisherId = bookInfo.PublisherId,
-            Publisher = publisherDTO
-        };
-        return book; */
+
+            var bookList = new List<BookDto>();
+
+            var book = (from b in _context.Books
+                        join p in _context.Publishers on b.PublisherId equals p.Id
+                        select
+                        new
+                        {
+                            Id = b.Id,
+                            Name = b.Name,
+                            Type = b.Type,
+                            PublishDate = b.PublishDate,
+                            Price = b.Price,
+                            PublisherId = b.PublisherId,
+                            Publisher = new { Id = p.Id, Name = p.Name }
+                        }).ToList();
+
+
+            if (book.Count == 0) return null;
+
+            
+
+            foreach (var b in book)
+            {
+                var bookDto = new BookDto();
+                var publisherDto = new PublisherDTO();
+
+                publisherDto.Id = b.Publisher.Id;
+                publisherDto.Name = b.Publisher.Name;
+
+                bookDto.Id = b.Id;
+                bookDto.Name = b.Name;
+                bookDto.Type = b.Type;
+                bookDto.PublishDate = b.PublishDate;
+                bookDto.Price = b.Price;
+                bookDto.PublisherId = b.PublisherId;
+                bookDto.Publisher = publisherDto;
+
+                // Author list
+                var authors = (
+                from ba in _context.Book_Authors
+                where ba.BookId == b.Id
+                join a in _context.Authors on ba.AuthorId equals a.Id
+                select
+                new
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    BirthDate = a.BirthDate,
+                    ShortBio = a.ShortBio,
+                }).ToList();
+
+                foreach (var author in authors)
+                {
+                    var authorDto = new AuthorDTO();
+                    authorDto.Id = author.Id;
+                    authorDto.Name = author.Name;
+                    authorDto.BirthDate = author.BirthDate;
+                    authorDto.ShortBio = author.ShortBio;
+                    bookDto.Author.Add(authorDto);
+                }
+
+                bookList.Add(bookDto);
+            }
+
+            return bookList;
+
+        }
 
     }
 }

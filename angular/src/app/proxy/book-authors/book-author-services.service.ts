@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 export class BookAuthorServicesService {
   apiName = 'Default';
   
+
   create = (input: CreateUpdateBookAuthorDTO) =>
     this.restService.request<any, BookAuthorDTO>({
       method: 'POST',
