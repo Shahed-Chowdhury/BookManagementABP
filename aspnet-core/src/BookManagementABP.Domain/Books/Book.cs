@@ -21,9 +21,9 @@ namespace BookManagementABP.Books
 
         public float Price { get; set; }
 
-        //[Required, ForeignKey("Publisher")]
+        [Required, ForeignKey("Publisher")]
         public Guid PublisherId { get; set; } 
-        //public Publisher Publisher { get; set; }
+        public Publisher Publisher { get; set; }
 
         //public ICollection<Book_Author> book_Authors { get; set; }
 

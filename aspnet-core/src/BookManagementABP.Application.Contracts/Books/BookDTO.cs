@@ -1,5 +1,7 @@
-﻿using BookManagementABP.Publishers;
+﻿using BookManagementABP.Authors;
+using BookManagementABP.Publishers;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 
@@ -19,6 +21,13 @@ namespace BookManagementABP.Books
         [Required]
         public Guid PublisherId { get; set; }
 
-        public PublisherDTO publisher { get; set; }
+        public PublisherDTO Publisher { get; set; }
+
+        public ICollection<AuthorDTO> Author { get; set; }  
+
+        public BookDto()
+        {
+            Author = new List<AuthorDTO>();
+        }
     }
 }
