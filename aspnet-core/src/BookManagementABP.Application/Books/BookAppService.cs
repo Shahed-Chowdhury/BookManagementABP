@@ -111,7 +111,7 @@ namespace BookManagementABP.Books
                             Price = b.Price,
                             PublisherId = b.PublisherId,
                             Publisher = new { Id = p.Id, Name = p.Name }
-                        }).ToList();
+                        }).OrderByDescending(x => x.Id).ToList();
 
 
             if (book.Count == 0) return null;

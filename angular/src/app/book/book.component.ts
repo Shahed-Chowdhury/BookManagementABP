@@ -29,6 +29,7 @@ export class BookComponent implements OnInit {
   selectedPublisher:any;
   selectedAuthors:any;
   bookId: string
+  preSelectedAuthors: any
 
   // add bookTypes as a list of BookType enum members
   bookTypes = bookTypeOptions;
@@ -63,8 +64,12 @@ export class BookComponent implements OnInit {
   getList(){
     this.bookService.getBookDetails().subscribe(res => {
       var items = res;
-      this.book.items = items
-      this.book.totalCount = items.length
+      if(items){
+        this.book.items = items
+        this.book.totalCount = items.length
+      }else{
+        this.book.items = []
+      }
     })
   }
 
@@ -81,7 +86,8 @@ export class BookComponent implements OnInit {
     this.bookService.getWithPublisherById(id).subscribe(book => {
       this.selectedBook = book;
       this.selectedPublisher = this.selectedBook.publisher
-      this.selectedAuthors = this.selectedBook.author    
+      this.selectedAuthors = this.selectedBook.author 
+      this.preSelectedAuthors = this.selectedAuthors   
       this.buildForm();
       this.isModalOpen = true;
     })
@@ -123,6 +129,13 @@ export class BookComponent implements OnInit {
           this.bookAuthorService.create(obj).subscribe(res => {})
         })
       }
+
+      // .................................Fix it by tomorrow.................................
+      // add and remove bookAuthor
+      // ..................................... End ..........................................
+
+
+      
       
       this.isModalOpen = false;
       this.form.reset();
@@ -136,7 +149,7 @@ export class BookComponent implements OnInit {
   delete(id: string) {
     this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
       if (status === Confirmation.Status.confirm) {
-        this.bookService.delete(id).subscribe(() => this.getList());
+        this.bookService.delete(id).subscribe((res) => {console.log(res); this.getList()});
       }
     });
   }
@@ -144,6 +157,8 @@ export class BookComponent implements OnInit {
   selectedAuthorsFn(event){
     var authors = event
     this.selectedAuthors = authors;
+    console.log("Selected authors", this.selectedAuthors);
+    console.log("Preselected authors", this.preSelectedAuthors);
   }
 
   selectedPublisherFn(event){
