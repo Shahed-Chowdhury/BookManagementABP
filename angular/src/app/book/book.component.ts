@@ -29,7 +29,7 @@ export class BookComponent implements OnInit {
   selectedPublisher:any;
   selectedAuthors:any;
   bookId: string
-  preSelectedAuthors: any
+  preSelectedAuthors = []
 
   // add bookTypes as a list of BookType enum members
   bookTypes = bookTypeOptions;
@@ -120,23 +120,61 @@ export class BookComponent implements OnInit {
       ? await this.bookService.update(this.selectedBook.id, bookObj).toPromise()
       : await this.bookService.create(bookObj).toPromise();
 
-      this.bookId = request.id
+      // .................................Fix it by tomorrow.................................
+      // there are 2 components preselected and selected
+      // loop through both the arrays and store the keys in the object
 
-      if(!this.selectedBook.id){
-        this.selectedAuthors.forEach(author => {
-          var obj = {} as CreateUpdateBookAuthorDTO;
-          obj = { authorId: author.id, bookId: this.bookId }
-          this.bookAuthorService.create(obj).subscribe(res => {})
+      this.bookId = request.id
+      
+      //console.log("Selected:", this.selectedAuthors, "Preselected:", this.preSelectedAuthors);
+
+      var selectedAuthorIds = []
+      var preSelectedAuthorIds = {}
+      var uniqueAuthorIds = []
+
+      this.selectedAuthors.forEach(a => selectedAuthorIds.push(a.id))
+      this.preSelectedAuthors.forEach(a => preSelectedAuthorIds[a.id] = 1)
+
+      selectedAuthorIds.forEach(id => {
+        if(!preSelectedAuthorIds[id]) { uniqueAuthorIds.push(id) }
+      })
+
+      // save
+      uniqueAuthorIds.forEach(a => {
+        this.bookAuthorService.create({bookId: this.bookId, authorId: a}).subscribe(()=>{})
+      })
+
+      uniqueAuthorIds = []
+
+      Object.keys(preSelectedAuthorIds).forEach(preSA => {
+        if(!selectedAuthorIds.includes(preSA))
+        {
+          uniqueAuthorIds.push(preSA)
+        }
+      })
+
+      console.log("Delete author", uniqueAuthorIds);
+
+      if(uniqueAuthorIds.length > 0)
+      {
+        uniqueAuthorIds.forEach(auid =>{
+          this.bookAuthorService.deleteByIdByBookIdAndAuthorId(this.bookId,auid).subscribe(()=>{})
         })
       }
 
-      // .................................Fix it by tomorrow.................................
-      // add and remove bookAuthor
+      
+
+      
+
+      // selectedAuthorIds.forEach(id =>{
+      //   if(!preSelectedAuthorIds[id])
+      //   {
+      //     uniqueAuthorIds.push(id)
+      //   }
+      // })
+      
       // ..................................... End ..........................................
 
-
-      
-      
       this.isModalOpen = false;
       this.form.reset();
       this.getList();

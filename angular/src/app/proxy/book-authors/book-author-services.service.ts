@@ -27,6 +27,15 @@ export class BookAuthorServicesService {
     { apiName: this.apiName });
   
 
+  deleteByIdByBookIdAndAuthorId = (bookId: string, authorId: string) =>
+    this.restService.request<any, boolean>({
+      method: 'DELETE',
+      url: '/api/app/book-author-services/by-id',
+      params: { bookId, authorId },
+    },
+    { apiName: this.apiName });
+  
+
   get = (id: string) =>
     this.restService.request<any, BookAuthorDTO>({
       method: 'GET',
