@@ -1,3 +1,4 @@
+import { BookService } from '@proxy/books';
 import { PublisherDTO } from './../proxy/publishers/models';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { PublisherService } from './../proxy/publishers/publisher.service';
@@ -22,7 +23,8 @@ export class PublisherComponent implements OnInit {
     private publisherService: PublisherService,
     private fb: FormBuilder,
     public readonly list: ListService,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private bookService: BookService
     ){}
 
   ngOnInit(): void {
@@ -54,11 +56,20 @@ export class PublisherComponent implements OnInit {
   }
 
   deletePublisher(publisherId){
-    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
-      if (status === Confirmation.Status.confirm) {
-        this.publisherService.delete(publisherId).subscribe(() => this.list.get());
+    this.bookService.getPublisherCountByPublisher_id(publisherId).subscribe(res => {
+      var count = res;
+
+      if(count > 0)
+      {
+        this.confirmation.error('::DeleteErrorBook', 'Sorry').subscribe((status) => {});
+      }else {
+        this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
+          if (status === Confirmation.Status.confirm) {
+            this.publisherService.delete(publisherId).subscribe(() => this.list.get());
+          }
+        });
       }
-    });
+    })    
   }
 
   save(){

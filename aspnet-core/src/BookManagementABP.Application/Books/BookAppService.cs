@@ -2,6 +2,7 @@
 using BookManagementABP.EntityFrameworkCore;
 using BookManagementABP.Publishers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Polly;
 using System;
 using System.Collections.Generic;
@@ -163,6 +164,12 @@ namespace BookManagementABP.Books
 
             return bookList;
 
+        }
+
+        public int GetPublisherCount(Guid publisher_id)
+        {
+            var books = _context.Books.Where(x => x.PublisherId == publisher_id).ToList().Count();
+            return books;
         }
 
     }

@@ -43,11 +43,18 @@ export class AuthorComponent implements OnInit {
 
   deleteAuthor(authorId: string)
   {
-    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
-      if (status === Confirmation.Status.confirm) {
-        this.authorService.delete(authorId).subscribe(() => this.list.get());
+    this.authorService.getAuthorCountBeforeDeleteByAuthor_id(authorId).subscribe(res => {
+      if(res > 0)
+      {
+        this.confirmation.error('::DeleteErrorBook', 'Sorry').subscribe((status) => {});
+      }else {
+        this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
+          if (status === Confirmation.Status.confirm) {
+            this.authorService.delete(authorId).subscribe(() => this.list.get());
+          }
+        });
       }
-    });
+    })    
   }
 
   editAuthor(authorId: string)

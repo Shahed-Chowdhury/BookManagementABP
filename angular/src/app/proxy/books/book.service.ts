@@ -52,6 +52,15 @@ export class BookService {
     { apiName: this.apiName });
   
 
+  getPublisherCountByPublisher_id = (publisher_id: string) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: '/api/app/book/publisher-count',
+      params: { publisher_id },
+    },
+    { apiName: this.apiName });
+  
+
   getWithPublisherById = (id: string) =>
     this.restService.request<any, BookDto>({
       method: 'GET',

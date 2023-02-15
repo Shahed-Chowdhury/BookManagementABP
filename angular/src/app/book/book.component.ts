@@ -125,8 +125,7 @@ export class BookComponent implements OnInit {
       // loop through both the arrays and store the keys in the object
 
       this.bookId = request.id
-      
-      //console.log("Selected:", this.selectedAuthors, "Preselected:", this.preSelectedAuthors);
+    
 
       var selectedAuthorIds = []
       var preSelectedAuthorIds = {}
@@ -153,7 +152,6 @@ export class BookComponent implements OnInit {
         }
       })
 
-      console.log("Delete author", uniqueAuthorIds);
 
       if(uniqueAuthorIds.length > 0)
       {
@@ -162,17 +160,6 @@ export class BookComponent implements OnInit {
         })
       }
 
-      
-
-      
-
-      // selectedAuthorIds.forEach(id =>{
-      //   if(!preSelectedAuthorIds[id])
-      //   {
-      //     uniqueAuthorIds.push(id)
-      //   }
-      // })
-      
       // ..................................... End ..........................................
 
       this.isModalOpen = false;
@@ -187,7 +174,7 @@ export class BookComponent implements OnInit {
   delete(id: string) {
     this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
       if (status === Confirmation.Status.confirm) {
-        this.bookService.delete(id).subscribe((res) => {console.log(res); this.getList()});
+        this.bookService.delete(id).subscribe((res) => { this.getList()});
       }
     });
   }
@@ -195,8 +182,6 @@ export class BookComponent implements OnInit {
   selectedAuthorsFn(event){
     var authors = event
     this.selectedAuthors = authors;
-    console.log("Selected authors", this.selectedAuthors);
-    console.log("Preselected authors", this.preSelectedAuthors);
   }
 
   selectedPublisherFn(event){

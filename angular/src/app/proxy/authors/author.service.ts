@@ -35,6 +35,15 @@ export class AuthorService {
     { apiName: this.apiName });
   
 
+  getAuthorCountBeforeDeleteByAuthor_id = (author_id: string) =>
+    this.restService.request<any, number>({
+      method: 'GET',
+      url: '/api/app/author/author-count-before-delete',
+      params: { author_id },
+    },
+    { apiName: this.apiName });
+  
+
   getList = (input: PagedAndSortedResultRequestDto) =>
     this.restService.request<any, PagedResultDto<AuthorDTO>>({
       method: 'GET',
