@@ -1,6 +1,7 @@
 ﻿using BookManagementABP.Book_Authors;
 using BookManagementABP.Books;
 using BookManagementABP.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace BookManagementABP.BookAuthors
 {
+    [Authorize]
     public class BookAuthorServices : CrudAppService<Book_Author, BookAuthorDTO, Guid, PagedAndSortedResultRequestDto, CreateUpdateBookAuthorDTO>, IBookAuthorAppService
     {
         private readonly BookManagementABPDbContext _context;

@@ -1,6 +1,7 @@
 ﻿using BookManagementABP.Authors;
 using BookManagementABP.EntityFrameworkCore;
 using BookManagementABP.Publishers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Polly;
@@ -16,6 +17,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace BookManagementABP.Books
 {
+    [Authorize]
     public class BookAppService :
         CrudAppService<Book, BookDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateBookDto>,
         IBookAppService

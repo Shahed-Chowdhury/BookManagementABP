@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PermissionGuard } from '@abp/ng.core';
 
 const routes: Routes = [
   {
@@ -25,9 +26,21 @@ const routes: Routes = [
     loadChildren: () =>
       import('@abp/ng.setting-management').then(m => m.SettingManagementModule.forLazy()),
   },
-  { path: 'books', loadChildren: () => import('./book/book.module').then(m => m.BookModule) },
-  { path: 'authors', loadChildren: () => import('./author/author.module').then(m => m.AuthorModule) },
-  { path: 'publishers', loadChildren: () => import('./publisher/publisher.module').then(m => m.PublisherModule) },
+  { 
+    path: 'books',
+    canActivate: [PermissionGuard],
+    loadChildren: () => import('./book/book.module').then(m => m.BookModule)
+  },
+  {
+    path: 'authors',
+    canActivate: [PermissionGuard],
+    loadChildren: () => import('./author/author.module').then(m => m.AuthorModule)
+  },
+  {
+    path: 'publishers',
+    canActivate: [PermissionGuard],
+    loadChildren: () => import('./publisher/publisher.module').then(m => m.PublisherModule)
+  },
   
 ];
 
