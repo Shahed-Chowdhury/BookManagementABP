@@ -112,12 +112,6 @@ public class CustomLoginModel : AccountPageModel
             return Page();
         }
 
-        //if (user != null && !user.EmailConfirmed)
-        //{
-        //    Alerts.Danger("Please check your email to confirm your account");
-        //    return Page();
-        //}
-
         var result = await SignInManager.CheckPasswordSignInAsync(user, LoginInput.Password, true);
 
         await IdentitySecurityLogManager.SaveAsync(new IdentitySecurityLogContext()
@@ -132,13 +126,11 @@ public class CustomLoginModel : AccountPageModel
             
             if (user.TwoFactorEnabled)
             {
-                //return await TwoFactorLoginResultAsync(user);
                 return await TwoFactorLoginResultAsync();
             }
             else
             {
                 await SignInManager.SignInAsync(user, isPersistent: false);
-                //return Redirect(ReturnUrl ?? "~/");
                 return RedirectSafely(ReturnUrl ?? _configuration["App:ClientUrl"] + "?force_redirect=true", ReturnUrlHash);
             }
         }
