@@ -21,7 +21,7 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-book',
         order: 2,
         layout: eLayoutType.application,
-        
+        requiredPolicy: 'BookManagementABP.Books'
       },
       {
         path: '/authors',
@@ -29,6 +29,7 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-feather',
         order: 2,
         layout: eLayoutType.application,
+        requiredPolicy: 'BookManagementABP.Authors'
       },
       {
         path: '/publishers',
@@ -36,6 +37,7 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-certificate',
         order: 3,
         layout: eLayoutType.application,
+        requiredPolicy: 'BookManagementABP.Publishers'
       },
     ]);
   };

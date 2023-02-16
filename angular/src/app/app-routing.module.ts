@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PermissionGuard } from '@abp/ng.core';
+import { AuthGuard, PermissionGuard } from '@abp/ng.core';
 
 const routes: Routes = [
   {
@@ -28,17 +28,17 @@ const routes: Routes = [
   },
   { 
     path: 'books',
-    canActivate: [PermissionGuard],
+    canActivate: [AuthGuard, PermissionGuard],
     loadChildren: () => import('./book/book.module').then(m => m.BookModule)
   },
   {
     path: 'authors',
-    canActivate: [PermissionGuard],
+    canActivate: [AuthGuard, PermissionGuard],
     loadChildren: () => import('./author/author.module').then(m => m.AuthorModule)
   },
   {
     path: 'publishers',
-    canActivate: [PermissionGuard],
+    canActivate: [AuthGuard, PermissionGuard],
     loadChildren: () => import('./publisher/publisher.module').then(m => m.PublisherModule)
   },
   

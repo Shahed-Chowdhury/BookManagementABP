@@ -1,6 +1,7 @@
 import { AuthService } from '@abp/ng.core';
 import { Component } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,15 @@ export class HomeComponent {
     return this.oAuthService.hasValidAccessToken();
   }
 
-  constructor(private oAuthService: OAuthService, private authService: AuthService) {}
+  constructor(private oAuthService: OAuthService, private authService: AuthService) {
+    if (window.location.href == environment.oAuthConfig.redirectUri + '/?force_redirect=true') {
+      this.authService.navigateToLogin();
+    }
+    if(!this.hasLoggedIn){
+      this.authService.navigateToLogin();
+
+    }
+  }
 
   login() {
     this.authService.navigateToLogin();

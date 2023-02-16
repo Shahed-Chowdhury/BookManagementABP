@@ -1,4 +1,5 @@
 ﻿using BookManagementABP.EntityFrameworkCore;
+using BookManagementABP.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,17 @@ using Volo.Abp.Domain.Repositories;
 
 namespace BookManagementABP.Authors
 {
-    [Authorize]
+    //[Authorize]
     public class AuthorAppService : CrudAppService<Author, AuthorDTO, Guid, PagedAndSortedResultRequestDto, CreateUpdateAuthorDTO>
     {
         private readonly BookManagementABPDbContext _context;
         public AuthorAppService(IRepository<Author, Guid> repository, BookManagementABPDbContext context) : base(repository)
         {
             _context = context;
+            GetListPolicyName = BookManagementABPPermissions.Authors.Default;
+            CreatePolicyName = BookManagementABPPermissions.Authors.Create;
+            UpdatePolicyName = BookManagementABPPermissions.Authors.Edit;
+            DeletePolicyName = BookManagementABPPermissions.Authors.Delete;
         }
         public int GetAuthorCountBeforeDelete(Guid author_id)
         {

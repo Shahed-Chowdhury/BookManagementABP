@@ -1,5 +1,6 @@
 ﻿using BookManagementABP.Authors;
 using BookManagementABP.EntityFrameworkCore;
+using BookManagementABP.Permissions;
 using BookManagementABP.Publishers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -15,23 +16,22 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
+
 namespace BookManagementABP.Books
 {
-    [Authorize]
-    public class BookAppService :
-        CrudAppService<Book, BookDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateBookDto>,
-        IBookAppService
+    //[Authorize]
+    public class BookAppService : CrudAppService<Book, BookDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateBookDto>, IBookAppService
     {
 
         private readonly BookManagementABPDbContext _context;
         
-        public BookAppService(
-            IRepository<Book, Guid> repository,
-            BookManagementABPDbContext context,
-            AuthorAppService authorsRepository
-        ) : base(repository)
+        public BookAppService(IRepository<Book, Guid> repository, BookManagementABPDbContext context, AuthorAppService authorsRepository) : base(repository)
         {
             _context = context;
+            GetListPolicyName = BookManagementABPPermissions.Books.Default;
+            CreatePolicyName = BookManagementABPPermissions.Books.Create;
+            UpdatePolicyName = BookManagementABPPermissions.Books.Edit;
+            DeletePolicyName = BookManagementABPPermissions.Books.Delete; 
         }
 
         public async Task<BookDto> GetWithPublisher(Guid id)

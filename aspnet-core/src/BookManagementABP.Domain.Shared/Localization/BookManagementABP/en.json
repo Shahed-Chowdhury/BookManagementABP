@@ -7,7 +7,7 @@
     "Menu:Publisher": "Publisher",
     "Welcome": "Welcome",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
-    "Menu:BookStore": "Book Store",
+    "Menu:BookStore": "Book Management",
     "Menu:Books": "Books",
     "Actions": "Actions",
     "Close": "Close",
@@ -16,7 +16,7 @@
     "PublishDate": "Publish date",
     "NewBook": "New book",
     "NewAuthor": "New author",
-    "NewPublisher":  "New publisher",
+    "NewPublisher": "New publisher",
     "New": "New book",
     "Name": "Name",
     "Type": "Type",
@@ -35,6 +35,23 @@
     "Enum:BookType.8": "Poetry",
     "BirthDate": "Date of birth",
     "ShortBio": "Bio",
-    "DeleteErrorBook": "Unable to delete, because it is used by books"
+    "DeleteErrorBook": "Unable to delete, because it is used by books",
+    "Permission:BookManagement": "Book Management App",
+
+    "Permission:Books": "Book Management",
+    "Permission:Books.Create": "Creating new books",
+    "Permission:Books.Edit": "Editing the books",
+    "Permission:Books.Delete": "Deleting the books",
+
+    "Permission:Authors": "Book Management",
+    "Permission:Authors.Create": "Creating new Authors",
+    "Permission:Authors.Edit": "Editing the Authors",
+    "Permission:Authors.Delete": "Deleting the Authors",
+
+    "Permission:Publishers": "Book Management",
+    "Permission:Publishers.Create": "Creating new Publishers",
+    "Permission:Publishers.Edit": "Editing the Publishers",
+    "Permission:Publishers.Delete": "Deleting the Publishers"
+
   }
 }
