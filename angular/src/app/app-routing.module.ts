@@ -41,6 +41,11 @@ const routes: Routes = [
     canActivate: [AuthGuard, PermissionGuard],
     loadChildren: () => import('./publisher/publisher.module').then(m => m.PublisherModule)
   },
+  { 
+    path: 'invitedAuthors',
+    canActivate: [AuthGuard, PermissionGuard],
+    loadChildren: () => import('./invited-authors/invited-authors.module').then(m => m.InvitedAuthorsModule)
+  },
   
 ];
 

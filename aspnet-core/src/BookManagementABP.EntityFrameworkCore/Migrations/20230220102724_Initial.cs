@@ -349,14 +349,13 @@ namespace BookManagementABP.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "App-Books",
+                name: "App-Authors",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    PublishDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Price = table.Column<float>(type: "real", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ShortBio = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -366,7 +365,47 @@ namespace BookManagementABP.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_App-Books", x => x.Id);
+                    table.PrimaryKey("PK_App-Authors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "App-InvitedUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_App-InvitedUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "App-Publishers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_App-Publishers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -662,6 +701,40 @@ namespace BookManagementABP.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "App-Books",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    PublishDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    PublisherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PublisherId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_App-Books", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_App-Books_App-Publishers_PublisherId",
+                        column: x => x.PublisherId,
+                        principalTable: "App-Publishers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_App-Books_App-Publishers_PublisherId1",
+                        column: x => x.PublisherId1,
+                        principalTable: "App-Publishers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OpenIddictAuthorizations",
                 columns: table => new
                 {
@@ -712,6 +785,37 @@ namespace BookManagementABP.Migrations
                         name: "FK_AbpEntityPropertyChanges_AbpEntityChanges_EntityChangeId",
                         column: x => x.EntityChangeId,
                         principalTable: "AbpEntityChanges",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "App-BookAuthors",
+                columns: table => new
+                {
+                    BookId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_App-BookAuthors", x => new { x.AuthorId, x.BookId });
+                    table.ForeignKey(
+                        name: "FK_App-BookAuthors_App-Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "App-Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_App-BookAuthors_App-Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "App-Books",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -950,6 +1054,21 @@ namespace BookManagementABP.Migrations
                 column: "UserName");
 
             migrationBuilder.CreateIndex(
+                name: "IX_App-BookAuthors_BookId",
+                table: "App-BookAuthors",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_App-Books_PublisherId",
+                table: "App-Books",
+                column: "PublisherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_App-Books_PublisherId1",
+                table: "App-Books",
+                column: "PublisherId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OpenIddictApplications_ClientId",
                 table: "OpenIddictApplications",
                 column: "ClientId");
@@ -1047,7 +1166,10 @@ namespace BookManagementABP.Migrations
                 name: "AbpUserTokens");
 
             migrationBuilder.DropTable(
-                name: "App-Books");
+                name: "App-BookAuthors");
+
+            migrationBuilder.DropTable(
+                name: "App-InvitedUsers");
 
             migrationBuilder.DropTable(
                 name: "OpenIddictScopes");
@@ -1071,10 +1193,19 @@ namespace BookManagementABP.Migrations
                 name: "AbpUsers");
 
             migrationBuilder.DropTable(
+                name: "App-Authors");
+
+            migrationBuilder.DropTable(
+                name: "App-Books");
+
+            migrationBuilder.DropTable(
                 name: "OpenIddictAuthorizations");
 
             migrationBuilder.DropTable(
                 name: "AbpAuditLogs");
+
+            migrationBuilder.DropTable(
+                name: "App-Publishers");
 
             migrationBuilder.DropTable(
                 name: "OpenIddictApplications");

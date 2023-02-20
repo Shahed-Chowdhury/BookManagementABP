@@ -5,6 +5,7 @@
     "Menu:Book": "Book",
     "Menu:Author": "Author",
     "Menu:Publisher": "Publisher",
+    "Menu:InvitedUsers": "Invited users",
     "Welcome": "Welcome",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
     "Menu:BookStore": "Book Management",
@@ -51,7 +52,8 @@
     "Permission:Publishers": "Book Management",
     "Permission:Publishers.Create": "Creating new Publishers",
     "Permission:Publishers.Edit": "Editing the Publishers",
-    "Permission:Publishers.Delete": "Deleting the Publishers"
+    "Permission:Publishers.Delete": "Deleting the Publishers",
+    "NewInviteUser":  "Invite user"
 
   }
 }

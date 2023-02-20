@@ -35,6 +35,7 @@ namespace BookManagementABP
 
         public async Task SeedAsync(DataSeedContext context)
         {
+           
            if (await _bookRepository.GetCountAsync() <= 0)
             {
                 await _bookRepository.InsertAsync(
@@ -44,7 +45,7 @@ namespace BookManagementABP
                         Type = BookType.Dystopia,
                         PublishDate = new DateTime(1949, 6, 8),
                         Price = 19.84f,
-                        PublisherId = new Guid("7C094DCB-DB1B-170B-6E57-3A09569409BF")
+                        PublisherId = new Guid("19D007DE-2550-676E-A01B-3A098091EA43")
                     },
                     autoSave: true
                 );
@@ -56,13 +57,11 @@ namespace BookManagementABP
                         Type = BookType.ScienceFiction,
                         PublishDate = new DateTime(1995, 9, 27),
                         Price = 42.0f,
-                        PublisherId = new Guid("4FA7B546-F0C9-D18F-627B-3A0956940B20")
+                        PublisherId = new Guid("398283AE-6191-2A98-EB56-3A098091EA77")
                     },
                     autoSave: true
                 ); ;
             }
-
-            
 
              if (await _authorRepository.GetCountAsync() <= 0)
              {
@@ -107,33 +106,27 @@ namespace BookManagementABP
                );
             }
 
+            
             if(await _bookAuthorRepository.GetCountAsync() <= 0)
             {
                 await _bookAuthorRepository.InsertAsync(
                     new Book_Author
                     {
-                        BookId = new Guid("78A5006A-09C8-D63E-C047-3A095698E093"),
-                        AuthorId = new Guid("6493C524-AA60-F636-9426-3A09569A4EF2")
+                        BookId = new Guid("06C7ECFF-0F16-78E8-EBAC-3A0980B1F33C"),
+                        AuthorId = new Guid("E3843F9F-8E46-901E-B5EB-3A098091EA13")
                     },
                     autoSave: true
                 );
                 await _bookAuthorRepository.InsertAsync(
                    new Book_Author
                    {
-                       BookId = new Guid("78A5006A-09C8-D63E-C047-3A095698E093"),
-                       AuthorId = new Guid("0DFAD0B9-B7D9-6B6F-3402-3A09569A5094")
+                       BookId = new Guid("06C7ECFF-0F16-78E8-EBAC-3A0980B1F33C"),
+                       AuthorId = new Guid("B6024B2C-CE23-ED02-14D6-3A098091EA36")
                    },
                    autoSave: true
                );
-               await _bookAuthorRepository.InsertAsync(
-                   new Book_Author
-                   {
-                       BookId = new Guid("78A5006A-09C8-D63E-C047-3A095698E093"),
-                       AuthorId = new Guid("6493C524-AA60-F636-9426-3A09569A4EF2")
-                   },
-                   autoSave: true
-               );
-            }
+               
+            } 
 
 
         }

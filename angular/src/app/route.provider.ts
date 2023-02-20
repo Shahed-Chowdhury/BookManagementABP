@@ -39,6 +39,14 @@ function configureRoutes(routesService: RoutesService) {
         layout: eLayoutType.application,
         requiredPolicy: 'BookManagementABP.Publishers'
       },
+      {
+        path: '/invitedAuthors',
+        name: '::Menu:InvitedUsers',
+        iconClass: 'fas fa-cross',
+        order: 4,
+        layout: eLayoutType.application,
+        requiredPolicy: 'BookManagementABP.Publishers'
+      },
     ]);
   };
 }

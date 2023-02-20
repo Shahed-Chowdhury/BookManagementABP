@@ -1,6 +1,7 @@
 ﻿using BookManagementABP.Authors;
 using BookManagementABP.Book_Authors;
 using BookManagementABP.Books;
+using BookManagementABP.Invited_Users;
 using BookManagementABP.Publishers;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -34,6 +35,8 @@ public class BookManagementABPDbContext :
     public DbSet<Publisher> Publishers { get; set; }    
 
     public DbSet<Book_Author> Book_Authors { get; set; }
+
+    public DbSet<Invited_User> Invited_Users { get; set; }
 
     #region Entities from the modules
 
@@ -120,6 +123,17 @@ public class BookManagementABPDbContext :
             b.ToTable(BookManagementABPConsts.DbTablePrefix + "Publishers", BookManagementABPConsts.DbSchema);
             b.ConfigureByConvention(); //auto configure for the base class props
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+        });
+
+        builder.Entity<Invited_User>(b =>
+        {
+            b.ToTable(BookManagementABPConsts.DbTablePrefix + "InvitedUsers", BookManagementABPConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.FirstName).IsRequired().HasMaxLength(128);
+            b.Property(x => x.LastName).IsRequired().HasMaxLength(128);
+            b.Property(x => x.Email).IsRequired();
+            b.Property(x => x.Role).IsRequired();
+            b.Property(x => x.PhoneNumber).IsRequired();
         });
     }
 }
