@@ -1,6 +1,6 @@
 import type { AuditedEntityDto } from '@abp/ng.core';
 
-export interface CreateUpdatePublisherDTO extends AuditedEntityDto<string> {
+export interface CreateUpdatePublisherDTO {
   name: string;
 }
 

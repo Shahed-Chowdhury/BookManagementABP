@@ -3,6 +3,8 @@ using BookManagementABP.Authors;
 using BookManagementABP.Book_Authors;
 using BookManagementABP.BookAuthors;
 using BookManagementABP.Books;
+using BookManagementABP.Invited_Users;
+using BookManagementABP.InvitedUsers;
 using BookManagementABP.Publishers;
 
 namespace BookManagementABP;
@@ -22,5 +24,7 @@ public class BookManagementABPApplicationAutoMapperProfile : Profile
         CreateMap<CreateUpdatePublisherDTO, Publisher>();
         CreateMap<Book_Author, BookAuthorDTO>();
         CreateMap<CreateUpdateBookAuthorDTO, Book_Author>();
+        CreateMap<Invited_User, InvitedUserDTO>();
+        CreateMap<CreateUpdateInvitedUserDTO, Invited_User>();
     }
 }

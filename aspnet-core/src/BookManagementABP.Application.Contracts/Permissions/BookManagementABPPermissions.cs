@@ -27,4 +27,12 @@ public static class BookManagementABPPermissions
         public const string Edit = Default + ".Edit";
         public const string Delete = Default + ".Delete";
     }
+
+    public static class InvitedUsers
+    {
+        public const string Default = GroupName + ".InvitedUsers";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
 }

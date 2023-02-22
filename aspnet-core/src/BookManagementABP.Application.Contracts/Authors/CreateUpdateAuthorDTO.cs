@@ -6,7 +6,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace BookManagementABP.Authors
 {
-    public class CreateUpdateAuthorDTO: AuditedEntityDto<Guid>
+    public class CreateUpdateAuthorDTO
     {
         [Required]
         public string Name { get; set; }

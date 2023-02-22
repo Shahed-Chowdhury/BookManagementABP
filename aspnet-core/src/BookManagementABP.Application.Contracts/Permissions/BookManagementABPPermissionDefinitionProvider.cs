@@ -24,6 +24,11 @@ public class BookManagementABPPermissionDefinitionProvider : PermissionDefinitio
         authorsPermission.AddChild(BookManagementABPPermissions.Authors.Create, L("Permission:Authors.Create"));
         authorsPermission.AddChild(BookManagementABPPermissions.Authors.Edit, L("Permission:Authors.Edit"));
         authorsPermission.AddChild(BookManagementABPPermissions.Authors.Delete, L("Permission:Authors.Delete"));
+
+        var InvitedUsersPermission = bookManagementGroup.AddPermission(BookManagementABPPermissions.InvitedUsers.Default, L("Permission:InvitedUsers"));
+        InvitedUsersPermission.AddChild(BookManagementABPPermissions.InvitedUsers.Create, L("Permission:InvitedUsers.Create"));
+        InvitedUsersPermission.AddChild(BookManagementABPPermissions.InvitedUsers.Edit, L("Permission:InvitedUsers.Edit"));
+        InvitedUsersPermission.AddChild(BookManagementABPPermissions.InvitedUsers.Delete, L("Permission:InvitedUsers.Delete"));
     }
 
     private static LocalizableString L(string name)

@@ -45,7 +45,7 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-cross',
         order: 4,
         layout: eLayoutType.application,
-        requiredPolicy: 'BookManagementABP.Publishers'
+        requiredPolicy: 'BookManagementABP.InvitedUsers'
       },
     ]);
   };

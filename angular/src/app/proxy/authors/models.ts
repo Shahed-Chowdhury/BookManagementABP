@@ -6,7 +6,7 @@ export interface AuthorDTO extends AuditedEntityDto<string> {
   shortBio?: string;
 }
 
-export interface CreateUpdateAuthorDTO extends AuditedEntityDto<string> {
+export interface CreateUpdateAuthorDTO {
   name: string;
   birthDate: string;
   shortBio: string;
