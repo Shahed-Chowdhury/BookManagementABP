@@ -11,16 +11,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Emailing;
 
 namespace BookManagementABP.Invited_Users
 {
-    public class InvitedUserAppServices: CrudAppService<Invited_User, InvitedUserDTO, Guid, PagedAndSortedResultRequestDto, CreateUpdateInvitedUserDTO>, IinvitedUserAppService
+    public class InvitedUserAppServices:CrudAppService<Invited_User, InvitedUserDTO, Guid, PagedAndSortedResultRequestDto, CreateUpdateInvitedUserDTO>, IinvitedUserAppService, ITransientDependency
     {
         private readonly BookManagementABPDbContext _context;
-        public InvitedUserAppServices(IRepository<Invited_User, Guid> repository, BookManagementABPDbContext context) : base(repository)
+        private readonly IEmailSender _emailSender;
+        public InvitedUserAppServices(IRepository<Invited_User, Guid> repository, BookManagementABPDbContext context, IEmailSender emailSender) : base(repository)
         {
             _context = context;
+            _emailSender = emailSender;
             GetListPolicyName = BookManagementABPPermissions.InvitedUsers.Default;
             CreatePolicyName = BookManagementABPPermissions.InvitedUsers.Create;
             UpdatePolicyName = BookManagementABPPermissions.InvitedUsers.Edit;
@@ -33,5 +37,14 @@ namespace BookManagementABP.Invited_Users
 
             return u;
         }
+
+        //public async Task SendMail(string EmailAddress)
+        //{
+        //    await _emailSender.SendAsync(
+        //        EmailAddress,
+        //        "Hello World",
+        //        "Checking"
+        //    );
+        //}
     }
 }

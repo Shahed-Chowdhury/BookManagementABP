@@ -18,7 +18,10 @@
     "NewBook": "New book",
     "NewAuthor": "New author",
     "NewPublisher": "New publisher",
-    
+
+    "INewUser": "Invite user",
+    "ICreateNewUser": "New user",
+
     "New": "New book",
     "Name": "Name",
     "Type": "Type",

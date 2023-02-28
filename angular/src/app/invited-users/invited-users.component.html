@@ -1,11 +1,10 @@
-<!-- Add the "new book" button here -->
+<!-- Add the "new user" button here -->
 <div class="text-lg-end pt-2">
-    <!-- <button id="create" class="btn btn-primary" type="button" (click)="createBook()"> -->
-    <button id="create" class="btn btn-primary" type="button">
+    <button id="create" class="btn btn-primary" type="button" (click)="inviteUser()">
       <i class="fa fa-plus mr-1"></i>&nbsp;
-      <span> {{ "::NewBook" | abpLocalization }}</span>
+      <span> {{ "::INewUser" | abpLocalization }}</span>
     </button>
-  </div><br>
+</div><br>
 
 <div class="card">
     <div class="card-header">
@@ -66,83 +65,41 @@
   <!-- Add the modal here -->
 <abp-modal [(visible)]="isModalOpen">
     <ng-template #abpHeader>
-      <h3>{{ (selectedBook.id ? '::Edit' : '::NewBook' ) | abpLocalization }}</h3>
+      <h3>{{ (selectedUser ? '::Edit' : '::ICreateNewUser' ) | abpLocalization }}</h3>
     </ng-template>
   
     <ng-template #abpBody>
       <form [formGroup]="form" (ngSubmit)="save()">
         <div class="form-group mb-3">
-          <label for="book-name">Name</label><span> * </span>
-          <input type="text" id="book-name" class="form-control mt-2" formControlName="name" autofocus />
+          <label for="firstname">First Name</label><span> * </span>
+          <input type="text" id="firstname" class="form-control mt-2" formControlName="firstName" autofocus />
         </div>
     
         <div class="form-group">
-          <label for="book-price">Price</label><span> * </span>
-          <input type="number" id="book-price" class="form-control mt-2 mb-3" formControlName="price" />
+          <label for="lastName">Last Name</label><span> * </span>
+          <input type="text" id="lastName" class="form-control mt-2 mb-3" formControlName="lastName" />
         </div>
-    
-        <div class="form-group mb-3">
-          <label for="book-type" class="mb-2">Type</label><span> * </span>
-          <select class="form-control" id="book-type" formControlName="type">
-            <option [ngValue]="null">Select a book type</option>
-            <option [ngValue]="type.value" *ngFor="let type of bookTypes"> {{ '::Enum:BookType.' + type.value | abpLocalization }}</option>
-          </select>
+
+        <div class="form-group">
+          <label for="email">Email</label><span> * </span>
+          <input type="text" id="email" class="form-control mt-2 mb-3" formControlName="email" />
         </div>
-    
-        <div class="form-group" class="mb-3">
-          <label class="mb-2">Publish date</label><span> * </span>
-          <input
-            #datepicker="ngbDatepicker"
-            class="form-control"
-            name="datepicker"
-            formControlName="publishDate"
-            ngbDatepicker
-            (click)="datepicker.toggle()"
-          />
+
+        <div class="form-group">
+          <label for="phoneNumber">Phone number</label><span> * </span>
+          <input type="number" id="phoneNumber" class="form-control mt-2 mb-3" formControlName="phoneNumber" />
         </div>
-        <div class=" mb-3">
-          <label for="" class="mb-2">Publishers</label><span>*</span>
-          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-          <ng-select
-            [items]="publisherList"
-            bindLabel="name"
-            bindvalue="id"
-            [multiple]="false"
-            (change)="selectedPublisherFn($event)"
-            [closeOnSelect]="true"
-            placeholder="Select publishers"
-            [(ngModel)]="selectedPublisher"
-            [ngModelOptions]="{standalone: true}"
-          ></ng-select>
-          <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-        </div>
-        <div class="form-group mb-5">
-          <label for="" class="mb-2">Authors</label><span>*</span>
-          <ng-select
-            [items]="authorList.items"
-            bindLabel="name"
-            bindvalue="id"
-            [multiple]="true"
-            (change)="selectedAuthorsFn($event)"
-            [closeOnSelect]="false"
-            placeholder="Select authors"
-            [(ngModel)]="selectedAuthors"
-            [ngModelOptions]="{standalone: true}"
-          ></ng-select>
-        </div>
+
       </form>
     </ng-template>
-    
-  
     <ng-template class="mt-5" #abpFooter>
       <button type="button" class="btn btn-secondary" abpClose>
           {{ '::Close' | abpLocalization }}
       </button>
-    
       <!--added save button-->
       <button class="btn btn-primary" (click)="save()" [disabled]="form.invalid">
-            <i class="fa fa-check mr-1"></i>
-            {{ '::Save' | abpLocalization }}
+          <i class="fa fa-check mr-1"></i>
+          {{ selectedUser ? 'Edit':'Send' | abpLocalization }}
       </button>
     </ng-template>
 </abp-modal>
