@@ -42,11 +42,10 @@ const routes: Routes = [
     loadChildren: () => import('./publisher/publisher.module').then(m => m.PublisherModule)
   },
   { 
-    path: 'invitedAuthors',
+    path: 'invitedUsers', 
     canActivate: [AuthGuard, PermissionGuard],
-    loadChildren: () => import('./invited-authors/invited-authors.module').then(m => m.InvitedAuthorsModule)
+    loadChildren: () => import('./invited-users/invited-users.module').then(m => m.InvitedUsersModule)
   },
-  
 ];
 
 @NgModule({

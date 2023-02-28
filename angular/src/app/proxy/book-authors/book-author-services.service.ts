@@ -1,7 +1,7 @@
-import type { BookAuthorDTO, CreateUpdateBookAuthorDTO } from './models';
 import { RestService } from '@abp/ng.core';
 import type { PagedAndSortedResultRequestDto, PagedResultDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
+import type { BookAuthorDTO, CreateUpdateBookAuthorDTO } from '../book-authors/models';
 
 @Injectable({
   providedIn: 'root',

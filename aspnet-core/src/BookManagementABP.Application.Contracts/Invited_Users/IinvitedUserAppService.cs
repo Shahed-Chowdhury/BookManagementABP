@@ -5,7 +5,7 @@ using System.Text;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
-namespace BookManagementABP.InvitedUsers
+namespace BookManagementABP.Invited_Users
 {
     public interface IinvitedUserAppService: ICrudAppService<InvitedUserDTO, Guid, PagedAndSortedResultRequestDto, CreateUpdateInvitedUserDTO>
     {

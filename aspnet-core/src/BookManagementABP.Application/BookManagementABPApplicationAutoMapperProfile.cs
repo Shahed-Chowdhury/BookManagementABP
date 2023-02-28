@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using BookManagementABP.Authors;
 using BookManagementABP.Book_Authors;
-using BookManagementABP.BookAuthors;
 using BookManagementABP.Books;
 using BookManagementABP.Invited_Users;
-using BookManagementABP.InvitedUsers;
 using BookManagementABP.Publishers;
 
 namespace BookManagementABP;

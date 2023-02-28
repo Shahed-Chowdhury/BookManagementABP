@@ -1,4 +1,4 @@
-import type { CreateUpdateInvitedUserDTO, InvitedUserDTO } from './models';
+import type { CreateUpdateInvitedUserDTO, InvitedUserDTO, Invited_User } from './models';
 import { RestService } from '@abp/ng.core';
 import type { PagedAndSortedResultRequestDto, PagedResultDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
@@ -40,6 +40,14 @@ export class InvitedUserAppServicesService {
       method: 'GET',
       url: '/api/app/invited-user-app-services',
       params: { sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName });
+  
+
+  getUserList = () =>
+    this.restService.request<any, Invited_User[]>({
+      method: 'GET',
+      url: '/api/app/invited-user-app-services/user-list',
     },
     { apiName: this.apiName });
   

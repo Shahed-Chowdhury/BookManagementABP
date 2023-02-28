@@ -121,6 +121,7 @@ public class CustomRegistrationModel : AccountPageModel
         );
 
         var user = await UserManager.GetByIdAsync(userDto.Id);
+        
         user.Name = Input.Name;
         user.Surname = Input.Surname;
         user.SetPhoneNumber(Input.PhoneNumber,true);

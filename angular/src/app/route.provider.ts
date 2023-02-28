@@ -40,9 +40,9 @@ function configureRoutes(routesService: RoutesService) {
         requiredPolicy: 'BookManagementABP.Publishers'
       },
       {
-        path: '/invitedAuthors',
+        path: '/invitedUsers',
         name: '::Menu:InvitedUsers',
-        iconClass: 'fas fa-cross',
+        iconClass: 'fas fa-users',
         order: 4,
         layout: eLayoutType.application,
         requiredPolicy: 'BookManagementABP.InvitedUsers'

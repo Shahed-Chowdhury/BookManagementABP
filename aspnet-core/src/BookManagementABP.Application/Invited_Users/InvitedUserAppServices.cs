@@ -13,9 +13,9 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
-namespace BookManagementABP.InvitedUsers
+namespace BookManagementABP.Invited_Users
 {
-    public class InvitedUserAppServices : CrudAppService<Invited_User, InvitedUserDTO, Guid, PagedAndSortedResultRequestDto, CreateUpdateInvitedUserDTO>, IinvitedUserAppService
+    public class InvitedUserAppServices: CrudAppService<Invited_User, InvitedUserDTO, Guid, PagedAndSortedResultRequestDto, CreateUpdateInvitedUserDTO>, IinvitedUserAppService
     {
         private readonly BookManagementABPDbContext _context;
         public InvitedUserAppServices(IRepository<Invited_User, Guid> repository, BookManagementABPDbContext context) : base(repository)
@@ -27,9 +27,9 @@ namespace BookManagementABP.InvitedUsers
             DeletePolicyName = BookManagementABPPermissions.InvitedUsers.Delete;
         }
 
-        public async Task<List<Invited_User>> GetList()
+        public async Task<List<Invited_User>> GetUserList()
         {
-            var u =  await _context.Invited_Users.ToListAsync();
+            var u = await _context.Invited_Users.ToListAsync();
 
             return u;
         }
