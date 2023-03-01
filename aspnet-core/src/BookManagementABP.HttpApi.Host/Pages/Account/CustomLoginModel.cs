@@ -59,14 +59,15 @@ public class CustomLoginModel : AccountPageModel
     protected IOptions<IdentityOptions> IdentityOptions { get; }
 
     private readonly IConfiguration _configuration;
-
+    private readonly ISettingEncryptionService _settingEncriptionService;
     public bool ShowCancelButton { get; set; }
 
     public CustomLoginModel(
         IAuthenticationSchemeProvider schemeProvider,
         IOptions<AbpAccountOptions> accountOptions,
         IOptions<IdentityOptions> identityOptions,
-        IConfiguration configuration
+        IConfiguration configuration,
+        ISettingEncryptionService settingEncryptionService
     )
         
     {
@@ -74,10 +75,12 @@ public class CustomLoginModel : AccountPageModel
         IdentityOptions = identityOptions;
         AccountOptions = accountOptions.Value;
         _configuration = configuration;
+        _settingEncriptionService = settingEncryptionService;
     }
 
     public virtual async Task<IActionResult> OnGetAsync()
     {
+        //var test = _settingEncriptionService.Encrypt(new SettingDefinition("Abp.Mailing.Smtp.Password"), "**shahedcreativitix1998");
         LoginInput = new LoginInputModel();
 
         ExternalProviders = await GetExternalProviders();

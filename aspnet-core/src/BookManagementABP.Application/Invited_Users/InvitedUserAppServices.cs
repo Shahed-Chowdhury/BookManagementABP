@@ -1,4 +1,5 @@
-﻿using BookManagementABP.EntityFrameworkCore;
+﻿using BookManagementABP.Emailing;
+using BookManagementABP.EntityFrameworkCore;
 using BookManagementABP.Invited_Users;
 using BookManagementABP.Permissions;
 using Microsoft.EntityFrameworkCore;
@@ -21,9 +22,11 @@ namespace BookManagementABP.Invited_Users
     {
         private readonly BookManagementABPDbContext _context;
         private readonly IEmailSender _emailSender;
-        public InvitedUserAppServices(IRepository<Invited_User, Guid> repository, BookManagementABPDbContext context, IEmailSender emailSender) : base(repository)
+        private readonly EmailService _emailService;
+        public InvitedUserAppServices(IRepository<Invited_User, Guid> repository, BookManagementABPDbContext context, IEmailSender emailSender, EmailService emailService) : base(repository)
         {
             _context = context;
+            _emailService = emailService;
             _emailSender = emailSender;
             GetListPolicyName = BookManagementABPPermissions.InvitedUsers.Default;
             CreatePolicyName = BookManagementABPPermissions.InvitedUsers.Create;
@@ -35,16 +38,9 @@ namespace BookManagementABP.Invited_Users
         {
             var u = await _context.Invited_Users.ToListAsync();
 
+            await _emailService.InvitedUserEmailAsync("shahed@mailinator.com");
+
             return u;
         }
-
-        //public async Task SendMail(string EmailAddress)
-        //{
-        //    await _emailSender.SendAsync(
-        //        EmailAddress,
-        //        "Hello World",
-        //        "Checking"
-        //    );
-        //}
     }
 }
