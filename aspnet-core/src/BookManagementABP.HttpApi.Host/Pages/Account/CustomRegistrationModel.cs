@@ -1,7 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BookManagementABP.Emailing.Templates.InvitedUser;
+using BookManagementABP.Invited_Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,6 +14,7 @@ using Volo.Abp.Account;
 using Volo.Abp.Account.Settings;
 using Volo.Abp.Account.Web.Pages.Account;
 using Volo.Abp.Auditing;
+using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using Volo.Abp.Settings;
 using Volo.Abp.Validation;
@@ -36,16 +40,48 @@ public class CustomRegistrationModel : AccountPageModel
     [BindProperty(SupportsGet = true)]
     public string ExternalLoginAuthSchema { get; set; }
 
-    public CustomRegistrationModel(IAccountAppService accountAppService)
+    private readonly IRepository<Invited_User, Guid> _invitedUserRepository;
+
+    public CustomRegistrationModel(
+        IAccountAppService accountAppService,
+        IRepository<Invited_User, Guid> invitedUserRepository
+    )
     {
         AccountAppService = accountAppService;
+        _invitedUserRepository = invitedUserRepository;
     }
 
-    public virtual async Task<IActionResult> OnGetAsync()
+    public virtual async Task<IActionResult> OnGetAsync(Guid? id)
     {
+        var invitationId = id;
+
+        if (id == null)
+        {
+            await CheckSelfRegistrationAsync();
+            await TrySetEmailAsync();
+            return Page();
+        }
+
         await CheckSelfRegistrationAsync();
-        await TrySetEmailAsync();
+        GetInvitationInfo(invitationId);
         return Page();
+
+    }
+
+    private async void GetInvitationInfo(Guid? invitationId)
+    {
+        var invited = await _invitedUserRepository.FirstOrDefaultAsync(x => x.Id == invitationId);
+        if (invited != null) { 
+            Input = new PostInput
+            {
+                Name = invited.FirstName,
+                Surname = invited.LastName,
+                PhoneNumber = invited.PhoneNumber,
+                EmailAddress= invited.Email,
+            };
+        }
+
+        return;
     }
 
     private async Task TrySetEmailAsync()

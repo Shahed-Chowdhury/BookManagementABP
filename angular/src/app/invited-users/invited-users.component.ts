@@ -1,4 +1,5 @@
-import { InvitedUserDTO } from './../proxy/invited-users/models';
+import { CreateUpdateAuthorDTO } from './../proxy/authors/models';
+import { InvitedUserDTO, CreateUpdateInvitedUserDTO } from './../proxy/invited-users/models';
 import { InvitedUserAppServicesService } from './../proxy/invited-users/invited-user-app-services.service';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -26,7 +27,7 @@ export class InvitedUsersComponent implements OnInit{
 
   getList(){
     const userStreamCreator = query => this.appService.getList(query);
-    this.list.hookToQuery(userStreamCreator).subscribe(res => { this.users = res })
+    this.list.hookToQuery(userStreamCreator).subscribe(res => { this.users = res; this.isModalOpen = false })
   }
 
   inviteUser(){
@@ -58,5 +59,24 @@ export class InvitedUsersComponent implements OnInit{
     })
   }
 
-  save(){}
+  save(){ 
+    var u = {
+      firstName: "string",
+      lastName: "string",
+      email: "string",
+      role: "string",
+      phoneNumber: "string"
+    }
+
+    u.firstName = this.form.value.firstName
+    u.lastName = this.form.value.lastName
+    u.email = this.form.value.email
+    u.role = "Undefined"
+    u.phoneNumber = this.form.value.phoneNumber
+
+    this.appService.addInvitedUserByDto(u).subscribe((res)=>{
+      console.log(res);
+      this.getList();
+    })
+  }
 }

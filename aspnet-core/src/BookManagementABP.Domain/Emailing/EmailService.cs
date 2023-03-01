@@ -24,23 +24,29 @@ namespace BookManagementABP.Emailing
             _emailSender = emailSender;
             _templateRenderer = templateRenderer;
             _configuration = configuration;
+            
         }
 
-        public async Task InvitedUserEmailAsync(string email)
+        public async Task InvitedUserEmailAsync(InvitedUser input)
         {
             try
             {
                 //var emailBody = await _templateRenderer.RenderAsync(StandardEmailTemplates.Message, new { message = "ABP Framework provides IEmailSender service that is used to send emails." });
 
-                var emailBody = await _templateRenderer.RenderAsync(
-                    CustomEmailTemplates.InvitedUser
+                var emailBody = await _templateRenderer.RenderAsync( 
+                    CustomEmailTemplates.InvitedUser,
+                    new InvitedUser()
+                    {
+                        FirstName = input.FirstName,
+                        LastName = input.LastName,
+                        Email = input.Email,
+                        PhoneNumber = input.PhoneNumber,
+                        UserId = input.UserId,
+                    }
+
                 );
 
-                await _emailSender.SendAsync(
-                    email,
-                    "Invited User",
-                    emailBody
-                );
+                await _emailSender.SendAsync( input.Email, "Invitation from Shahed's BookManagement App", emailBody );
             }
             catch(Exception ex)
             {

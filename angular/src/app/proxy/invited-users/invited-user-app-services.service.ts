@@ -10,6 +10,15 @@ export class InvitedUserAppServicesService {
   apiName = 'Default';
   
 
+  addInvitedUserByDto = (dto: CreateUpdateInvitedUserDTO) =>
+    this.restService.request<any, boolean>({
+      method: 'POST',
+      url: '/api/app/invited-user-app-services/invited-user',
+      body: dto,
+    },
+    { apiName: this.apiName });
+  
+
   create = (input: CreateUpdateInvitedUserDTO) =>
     this.restService.request<any, InvitedUserDTO>({
       method: 'POST',
