@@ -89,6 +89,18 @@
           <input type="text" id="phoneNumber" class="form-control mt-2 mb-3" formControlName="phoneNumber" />
         </div>
 
+        <div class="mb-3">
+          <label for="" class="mb-2">Select roles</label><span>*</span>
+          <ng-select
+              [items]="roles"
+              bindLabel="name"
+              bindvalue="name"
+              [multiple]="false"
+              (change)="selectedRole($event)"
+              [closeOnSelect]="true"
+              placeholder="Select roles"
+            ></ng-select>
+        </div>
       </form>
     </ng-template>
     <ng-template class="mt-5" #abpFooter>

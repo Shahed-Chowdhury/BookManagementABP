@@ -17,6 +17,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Emailing;
+using Volo.Abp.Identity;
 
 namespace BookManagementABP.Invited_Users
 {
@@ -25,13 +26,15 @@ namespace BookManagementABP.Invited_Users
         private readonly BookManagementABPDbContext _context;
         private readonly IEmailSender _emailSender;
         private readonly EmailService _emailService;
-        private readonly IRepository<Invited_User> _invitedUserRepository;
+        private readonly IRepository<IdentityRole, Guid> _roleRepository;
+
         public InvitedUserAppServices(
             IRepository<Invited_User,Guid> repository,
             BookManagementABPDbContext context,
             IEmailSender emailSender,
             EmailService emailService,
-            IRepository<Invited_User> invitedUserRepository) : base(repository)
+            IRepository<IdentityRole, Guid> roleRepository
+            ) : base(repository)
         {
             _context = context;
             _emailService = emailService;
@@ -40,7 +43,7 @@ namespace BookManagementABP.Invited_Users
             CreatePolicyName = BookManagementABPPermissions.InvitedUsers.Create;
             UpdatePolicyName = BookManagementABPPermissions.InvitedUsers.Edit;
             DeletePolicyName = BookManagementABPPermissions.InvitedUsers.Delete;
-            _invitedUserRepository = invitedUserRepository;
+            _roleRepository = roleRepository;
         }
 
         public async Task<List<Invited_User>> GetUserList()
@@ -53,6 +56,10 @@ namespace BookManagementABP.Invited_Users
         {
             try
             {
+                var i = await Repository.FirstOrDefaultAsync(x => x.Email == dto.Email);
+
+                if (i != null) { throw new UserFriendlyException("Email already exists"); }
+
                 var invitedUser = new Invited_User();
                 invitedUser.FirstName = dto.FirstName;
                 invitedUser.LastName = dto.LastName;
@@ -60,7 +67,7 @@ namespace BookManagementABP.Invited_Users
                 invitedUser.Role = dto.Role;
                 invitedUser.PhoneNumber = dto.PhoneNumber;
 
-                var u = await _invitedUserRepository.InsertAsync(invitedUser, true);
+                var u = await Repository.InsertAsync(invitedUser, true);
 
                 var iuser = new InvitedUser();
                 iuser.FirstName = u.FirstName;
@@ -73,6 +80,19 @@ namespace BookManagementABP.Invited_Users
 
                 return true;
 
+            }
+            catch(Exception ex)
+            {
+                throw new UserFriendlyException(ex.Message);
+            }
+        }
+
+        public async Task<List<IdentityRole>> GetRoles()
+        {
+            try
+            {
+                var roles = await _roleRepository.GetListAsync();
+                return roles;
             }
             catch(Exception ex)
             {

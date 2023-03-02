@@ -1,9 +1,11 @@
+import { IdentityClaim } from './../proxy/volo/abp/identity/models';
 import { CreateUpdateAuthorDTO } from './../proxy/authors/models';
 import { InvitedUserDTO, CreateUpdateInvitedUserDTO } from './../proxy/invited-users/models';
 import { InvitedUserAppServicesService } from './../proxy/invited-users/invited-user-app-services.service';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-invited-users',
@@ -20,8 +22,14 @@ export class InvitedUsersComponent implements OnInit{
   isModalOpen = false
   form: FormGroup
   selectedUser: any 
+  roles: any
+  selectedRoles: string
 
   ngOnInit(): void {
+    this.appService.getRoles().subscribe((res)=>{
+      this.roles = res;
+      console.log(this.roles);
+    })
     this.getList()
   }
 
@@ -71,7 +79,7 @@ export class InvitedUsersComponent implements OnInit{
     u.firstName = this.form.value.firstName
     u.lastName = this.form.value.lastName
     u.email = this.form.value.email
-    u.role = "Undefined"
+    u.role = this.selectedRoles
     u.phoneNumber = this.form.value.phoneNumber
 
     this.appService.addInvitedUserByDto(u).subscribe((res)=>{
@@ -79,4 +87,6 @@ export class InvitedUsersComponent implements OnInit{
       this.getList();
     })
   }
+
+  selectedRole(event){ this.selectedRoles = event.name; console.log(this.selectedRoles); }
 }

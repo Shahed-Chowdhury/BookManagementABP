@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 
 import { InvitedUsersRoutingModule } from './invited-users-routing.module';
 import { InvitedUsersComponent } from './invited-users.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 
 @NgModule({
@@ -12,7 +14,8 @@ import { InvitedUsersComponent } from './invited-users.component';
   ],
   imports: [
     SharedModule,
-    InvitedUsersRoutingModule
+    InvitedUsersRoutingModule,
+    NgSelectModule
   ]
 })
 export class InvitedUsersModule { }

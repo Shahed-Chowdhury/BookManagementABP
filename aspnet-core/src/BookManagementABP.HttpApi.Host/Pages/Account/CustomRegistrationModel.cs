@@ -22,6 +22,7 @@ using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace BookManagementABP.Pages.Account;
 
+
 public class CustomRegistrationModel : AccountPageModel
 {
 
@@ -42,6 +43,8 @@ public class CustomRegistrationModel : AccountPageModel
 
     private readonly IRepository<Invited_User, Guid> _invitedUserRepository;
 
+    //private static Guid? invitationId { get; set; } 
+
     public CustomRegistrationModel(
         IAccountAppService accountAppService,
         IRepository<Invited_User, Guid> invitedUserRepository
@@ -57,6 +60,16 @@ public class CustomRegistrationModel : AccountPageModel
 
         if (id == null)
         {
+
+            Input = new PostInput
+            {
+                Name = "",
+                Surname = "",
+                PhoneNumber = "",
+                EmailAddress = "",
+                Role = "public"
+            };
+
             await CheckSelfRegistrationAsync();
             await TrySetEmailAsync();
             return Page();
@@ -78,6 +91,7 @@ public class CustomRegistrationModel : AccountPageModel
                 Surname = invited.LastName,
                 PhoneNumber = invited.PhoneNumber,
                 EmailAddress= invited.Email,
+                Role = invited.Role
             };
         }
 
@@ -144,7 +158,7 @@ public class CustomRegistrationModel : AccountPageModel
 
     protected virtual async Task RegisterLocalUserAsync()
     {
-        ValidateModel();
+        //ValidateModel();
 
         var userDto = await AccountAppService.RegisterAsync(
             new RegisterDto
@@ -161,6 +175,15 @@ public class CustomRegistrationModel : AccountPageModel
         user.Name = Input.Name;
         user.Surname = Input.Surname;
         user.SetPhoneNumber(Input.PhoneNumber,true);
+        if(Input.Role!= null)
+        {
+            await UserManager.AddToRoleAsync(user, Input.Role);
+        }
+        else
+        {
+            await UserManager.AddToRoleAsync(user, "public");
+        }
+         //adds to the userRole
         await UserManager.UpdateAsync(user);
         await SignInManager.SignInAsync(user, isPersistent: true);
     }
@@ -238,5 +261,10 @@ public class CustomRegistrationModel : AccountPageModel
         [Compare("Password")]
         [DisableAuditing]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DisableAuditing]
+        //[DynamicStringLength(typeof(IdentityUserConsts), nameof(IdentityUserConsts.MaxUserNameLength))]
+        public string Role { get; set; }
     }
 }

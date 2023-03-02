@@ -2,6 +2,7 @@ import type { CreateUpdateInvitedUserDTO, InvitedUserDTO, Invited_User } from '.
 import { RestService } from '@abp/ng.core';
 import type { PagedAndSortedResultRequestDto, PagedResultDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
+import type { IdentityRole } from '../volo/abp/identity/models';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +50,14 @@ export class InvitedUserAppServicesService {
       method: 'GET',
       url: '/api/app/invited-user-app-services',
       params: { sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName });
+  
+
+  getRoles = () =>
+    this.restService.request<any, IdentityRole[]>({
+      method: 'GET',
+      url: '/api/app/invited-user-app-services/roles',
     },
     { apiName: this.apiName });
   

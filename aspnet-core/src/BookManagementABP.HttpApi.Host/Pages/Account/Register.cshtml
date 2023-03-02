@@ -37,17 +37,36 @@
                     <abp-input asp-for="Input.PhoneNumber" auto-focus="true" label="Phone number *"/>
             }
 
-            <abp-input asp-for="Input.EmailAddress" label="Email address *"/>
+            @if (Model.Input.EmailAddress.Length <= 0)
+            {
+                <abp-input asp-for="Input.EmailAddress" label="Email address *"/>
+            }
+            else
+            {
+                <abp-input asp-for="Input.EmailAddress" label="Email address *" readonly=true />
+            }
+
 
             @if (!Model.IsExternalLogin)
             {
-                    <abp-input asp-for="Input.Password"/>
+                <abp-input asp-for="Input.Password" />
             }
+
+            
 
             @if (!Model.IsExternalLogin)
             {
                 <abp-input asp-for="Input.ConfirmPassword" label="Confirm password"/>
             }
+
+            @*@if (!Model.IsExternalLogin && Model.Input != null)
+            {
+                <abp-input asp-for="Input.Role" hidden />
+            }else
+            {
+                <abp-input asp-for="Input.Role" hidden />
+            }
+            *@
 
             <div class="d-grid gap-2">
                 <abp-button button-type="Primary" type="submit" class="btn-lg mt-4">@L["Register"]</abp-button>
