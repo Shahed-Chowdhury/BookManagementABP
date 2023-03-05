@@ -138,7 +138,7 @@ public class CustomLoginModel : AccountPageModel
             }
             else
             {
-                await SignInManager.SignInAsync(user, isPersistent: false);
+                //await SignInManager.SignInAsync(user, isPersistent: false);
                 return RedirectSafely(ReturnUrl ?? _configuration["App:ClientUrl"] + "?force_redirect=true", ReturnUrlHash);
             }
         }
