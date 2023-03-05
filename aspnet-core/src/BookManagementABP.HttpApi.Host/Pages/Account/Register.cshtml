@@ -59,7 +59,7 @@
                 <abp-input asp-for="Input.ConfirmPassword" label="Confirm password *"/>
             }
 
-            <abp-input asp-for="Input.Role" readonly="true"/>
+            <abp-input asp-for="Input.Role" hidden readonly="true" suppress-label="true" />
 
             @*@if (!Model.IsExternalLogin && Model.Input != null)
             {

@@ -27,13 +27,15 @@ namespace BookManagementABP.Invited_Users
         private readonly IEmailSender _emailSender;
         private readonly EmailService _emailService;
         private readonly IRepository<IdentityRole, Guid> _roleRepository;
+        private readonly IRepository<IdentityUser, Guid> _userRepository;
 
         public InvitedUserAppServices(
             IRepository<Invited_User,Guid> repository,
             BookManagementABPDbContext context,
             IEmailSender emailSender,
             EmailService emailService,
-            IRepository<IdentityRole, Guid> roleRepository
+            IRepository<IdentityRole, Guid> roleRepository,
+            IRepository<IdentityUser, Guid> userRepository
             ) : base(repository)
         {
             _context = context;
@@ -44,6 +46,7 @@ namespace BookManagementABP.Invited_Users
             UpdatePolicyName = BookManagementABPPermissions.InvitedUsers.Edit;
             DeletePolicyName = BookManagementABPPermissions.InvitedUsers.Delete;
             _roleRepository = roleRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<List<Invited_User>> GetUserList()
@@ -57,8 +60,9 @@ namespace BookManagementABP.Invited_Users
             try
             {
                 var i = await Repository.FirstOrDefaultAsync(x => x.Email == dto.Email);
+                var us = await _userRepository.FirstOrDefaultAsync(x => x.Email == dto.Email);
 
-                if (i != null) { throw new UserFriendlyException("Email already exists"); }
+                if (i != null || us != null) { throw new UserFriendlyException("Email already exists"); }
 
                 var invitedUser = new Invited_User();
                 invitedUser.FirstName = dto.FirstName;

@@ -185,7 +185,7 @@ public class CustomRegistrationModel : AccountPageModel
         }
          
         await UserManager.UpdateAsync(user);
-        await SignInManager.SignInAsync(user, isPersistent: true);
+        //await SignInManager.SignInAsync(user, isPersistent: true);
     }
 
     protected virtual async Task RegisterExternalUserAsync(ExternalLoginInfo externalLoginInfo, string emailAddress)
