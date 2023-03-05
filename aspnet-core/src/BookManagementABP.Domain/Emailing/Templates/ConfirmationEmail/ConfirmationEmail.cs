@@ -9,7 +9,5 @@ namespace BookManagementABP.Emailing.Templates.ConfirmationEmail
     public class ConfirmationEmail
     {
         public string Email { get; set; }
-
-        //public string 
     }
 }

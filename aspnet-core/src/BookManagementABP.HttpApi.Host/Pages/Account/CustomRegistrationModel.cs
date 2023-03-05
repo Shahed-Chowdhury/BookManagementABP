@@ -141,13 +141,13 @@ public class CustomRegistrationModel : AccountPageModel
                 }
 
                 await RegisterExternalUserAsync(externalLoginInfo, Input.EmailAddress);
+                return Redirect(ReturnUrl ?? "~/");
             }
-            else
-            {
-                await RegisterLocalUserAsync();
-            }
+            
+            await RegisterLocalUserAsync();
+            return RedirectToPage("RegisterConfirmation", new {email=Input.EmailAddress}); //TODO: How to ensure safety? IdentityServer requires it however it should be checked somehow!
 
-            return Redirect(ReturnUrl ?? "~/"); //TODO: How to ensure safety? IdentityServer requires it however it should be checked somehow!
+            
         }
         catch (BusinessException e)
         {
@@ -177,13 +177,13 @@ public class CustomRegistrationModel : AccountPageModel
         user.SetPhoneNumber(Input.PhoneNumber,true);
         if(Input.Role!= null)
         {
-            await UserManager.AddToRoleAsync(user, Input.Role);
+            await UserManager.AddToRoleAsync(user, Input.Role); //adds to the userRole
         }
         else
         {
             await UserManager.AddToRoleAsync(user, "public");
         }
-         //adds to the userRole
+         
         await UserManager.UpdateAsync(user);
         await SignInManager.SignInAsync(user, isPersistent: true);
     }

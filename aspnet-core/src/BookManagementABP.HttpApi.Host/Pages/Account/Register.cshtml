@@ -56,8 +56,10 @@
 
             @if (!Model.IsExternalLogin)
             {
-                <abp-input asp-for="Input.ConfirmPassword" label="Confirm password"/>
+                <abp-input asp-for="Input.ConfirmPassword" label="Confirm password *"/>
             }
+
+            <abp-input asp-for="Input.Role" readonly="true"/>
 
             @*@if (!Model.IsExternalLogin && Model.Input != null)
             {

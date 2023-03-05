@@ -78,10 +78,15 @@ public class CustomLoginModel : AccountPageModel
         _settingEncriptionService = settingEncryptionService;
     }
 
-    public virtual async Task<IActionResult> OnGetAsync()
+    public virtual async Task<IActionResult> OnGetAsync(string email = null)
     {
         //var test = _settingEncriptionService.Encrypt(new SettingDefinition("Abp.Mailing.Smtp.Password"), "**shahedcreativitix1998");
         LoginInput = new LoginInputModel();
+
+        if(email != null )
+        {
+            LoginInput.UserNameOrEmailAddress= email;
+        }
 
         ExternalProviders = await GetExternalProviders();
 

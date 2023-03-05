@@ -15,6 +15,10 @@ namespace BookManagementABP.Emailing
             context.Add(new TemplateDefinition(
                 name: CustomEmailTemplates.InvitedUser
             ).WithVirtualFilePath("/Emailing/Templates/InvitedUser/InvitedUser.html", isInlineLocalized: true));
+
+            context.Add(new TemplateDefinition(
+                name: CustomEmailTemplates.ConfirmationEmail
+            ).WithVirtualFilePath("/Emailing/Templates/ConfirmationEmail/ConfirmationEmail.html", isInlineLocalized: true));
         }
     }
 }
